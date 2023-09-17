@@ -1,0 +1,39 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: Anton;
+
+  src: url(./assets/fonts/Anton-Regular.ttf);
+}
+@font-face {
+  font-family: Manrope;
+
+  src: url(./assets/fonts/Manrope/Manrope-VariableFont_wght.ttf);
+}
+
+:root {
+  font-family: Manrope, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #1b1b1b;
+  background-color: #ededed;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+}
