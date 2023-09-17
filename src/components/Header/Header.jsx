@@ -4,7 +4,7 @@ function Header() {
   return (
     <>
       <div className="flex justify-start w-full h-auto">
-        <img src={logo} alt="Logo" className="absolute w-auto top-10 left-10" />
+        <img src={logo} alt="Logo" className="absolute w-auto top-10 left-14" />
         <div className="flex gap-5 flex-col w-full h-[48rem] min-h-full bg-[url('assets/interface/header-bg.png')] bg-no-repeat bg-cover justify-center items-center ">
           <h1 className="text-5xl leading-snug text-center text-yellowTheme font-['Anton'] ">
             CHERCHEZ PARMI PLUS DE 1500 RECETTES <br />
@@ -16,7 +16,7 @@ function Header() {
               type="text"
               placeholder="Rechercher une recette"
             />
-            <span className="absolute top-0 right-0">
+            <span className="absolute px-2 py-1 text-xl text-white bg-black rounded right-[6px] top-[6px]">
               <i className="fa-solid fa-magnifying-glass"></i>
             </span>
           </div>
