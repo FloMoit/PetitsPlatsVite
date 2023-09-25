@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { recipes as defaultRecipes } from "../../data/recipes.js";
-import Select from "react-select";
+import Select from "../Select/Select.jsx";
 import Recipe from "../Recipe/Recipe.jsx";
 
 function Main(props) {
@@ -27,18 +27,21 @@ function Main(props) {
       recipe["ingredients"].forEach((ingredient) => {
         const ingredientName = capitalizeFirstLetter(ingredient["ingredient"]);
 
-        if (ingredients.some((e) => e.label !== ingredientName))
+        if (!ingredients.some((e) => e.label === ingredientName)) {
           ingredients.push({ label: ingredientName, value: ingredientName });
+        }
       });
 
       const applianceName = capitalizeFirstLetter(recipe["appliance"]);
-      if (appliances.some((e) => e.label) !== applianceName)
+      if (!appliances.some((e) => e.label === applianceName)) {
         appliances.push({ label: applianceName, value: applianceName });
+      }
 
       recipe["ustensils"].forEach((ustensil) => {
         const ustensilName = capitalizeFirstLetter(ustensil);
-        if (ustensils.map((e) => e.label).indexOf(ustensilName) === -1)
+        if (!ustensils.some((e) => e.label === ustensilName)) {
           ustensils.push({ label: ustensilName, value: ustensilName });
+        }
       });
 
       ingredients.sort((a, b) => a.label.localeCompare(b.label));
