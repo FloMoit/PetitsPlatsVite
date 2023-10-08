@@ -3,6 +3,64 @@ import { recipes as defaultRecipes } from "../../data/recipes.js";
 import Select from "../Select/Select.jsx";
 import Recipe from "../Recipe/Recipe.jsx";
 
+function filterRecipes(recipes, search, tags) {
+  search = search.toLowerCase();
+
+  return recipes.filter((recipe) => {
+    let isOk = false;
+    if (search !== "") {
+      if (recipe.name.toLowerCase().includes(search)) {
+        isOk = true;
+      } else if (recipe.description.toLowerCase().includes(search)) {
+        isOk = true;
+      } else if (
+        recipe.ingredients.some((ingredient) =>
+          ingredient.ingredient.toLowerCase().includes(search)
+        )
+      ) {
+        isOk = true;
+      } else {
+        isOk = false;
+      }
+    } else {
+      isOk = true;
+    }
+
+    if (tags.ingredients.length > 0 && isOk) {
+      if (
+        recipe.ingredients.some((ingredient) =>
+          tags.ingredients.includes(ingredient.ingredient)
+        )
+      ) {
+        console.log("ingredient", recipe.ingredients);
+        isOk = true;
+      } else {
+        isOk = false;
+      }
+    }
+
+    if (tags.appliances.length > 0 && isOk) {
+      if (tags.appliances.includes(recipe.appliance)) {
+        isOk = true;
+      } else {
+        isOk = false;
+      }
+    }
+
+    if (tags.ustensils.length > 0 && isOk) {
+      if (
+        recipe.ustensils.some((ustensil) => tags.ustensils.includes(ustensil))
+      ) {
+        isOk = true;
+      } else {
+        isOk = false;
+      }
+    }
+
+    return isOk;
+  });
+}
+
 function Main(props) {
   const [selectedIngredients, setSelectedIngredient] = useState([]);
   const [selectedAppliances, setSelectedAppliance] = useState([]);
@@ -11,12 +69,21 @@ function Main(props) {
   const { search } = props;
 
   let recipes = useMemo(() => {
-    if (search !== "") {
-      console.log(search);
+    if (
+      search !== "" ||
+      selectedIngredients.length > 0 ||
+      selectedAppliances.length > 0 ||
+      selectedUstensils.length > 0
+    ) {
+      return filterRecipes(defaultRecipes, search, {
+        ingredients: selectedIngredients,
+        appliances: selectedAppliances,
+        ustensils: selectedUstensils,
+      });
+    } else {
+      return defaultRecipes;
     }
-
-    return defaultRecipes;
-  }, [search]);
+  }, [search, selectedIngredients, selectedAppliances, selectedUstensils]);
 
   let components = useMemo(() => {
     let ingredients = [];
@@ -50,7 +117,7 @@ function Main(props) {
     });
 
     return { ingredients, appliances, ustensils };
-  }, []);
+  }, [recipes]);
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -96,8 +163,8 @@ function Main(props) {
 
   return (
     <>
-      <div className="flex flex-col gap-4 px-48 py-5">
-        <div className="flex flex-row gap-10">
+      <div className="flex flex-col gap-4 px-48 py-5 ">
+        <div className="z-10 flex flex-row gap-10 overflow-visible max-h-10">
           <Select
             className=""
             options={components.ingredients}
@@ -117,7 +184,7 @@ function Main(props) {
             defaultValue={{ label: "Ustensiles", value: "Ustensiles" }}
           />
 
-          <span className="ml-auto font-['Anton'] text-xl">
+          <span className="ml-auto font-['Anton'] text-xl self-center">
             {recipes.length} recettes
           </span>
         </div>
@@ -160,9 +227,16 @@ function Main(props) {
           ))}
         </div>
         <div className="grid grid-flow-row grid-cols-3 mt-6 gap-14">
-          {recipes.map((recipe) => (
-            <Recipe key={recipe.id} recipe={recipe} />
-          ))}
+          {recipes.length > 0 ? (
+            recipes.map((recipe) => <Recipe key={recipe.id} recipe={recipe} />)
+          ) : (
+            <div>
+              <h1 className="absolute text-2xl leading-snug text-center text-black font-['Anton'] ">
+                Aucune recette ne correspond à votre critère… vous pouvez
+                chercher « tarte aux pommes », « poisson », etc.
+              </h1>
+            </div>
+          )}
         </div>
       </div>
     </>

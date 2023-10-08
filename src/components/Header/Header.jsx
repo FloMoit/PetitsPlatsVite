@@ -3,6 +3,16 @@ import logo from "../../assets/interface/logo.png";
 function Header(props) {
   const { onSearch } = props;
 
+  function changeHandler(event) {
+    console.log(event.target.value);
+
+    if (event.target.value.length < 3) {
+      onSearch("");
+    } else {
+      onSearch(event.target.value);
+    }
+  }
+
   return (
     <>
       <div className="flex justify-start w-full h-auto">
@@ -16,14 +26,12 @@ function Header(props) {
             className="relative flex justify-center w-1/2"
             onSubmit={(event) => {
               event.preventDefault();
-              const data = new FormData(event.target);
-              const search = data.get("search");
-              onSearch(search);
             }}>
             <input
               className="w-full px-5 py-3 text-black bg-white rounded "
               type="text"
               name="search"
+              onChange={changeHandler}
               placeholder="Rechercher une recette, un ingrédient, ..."
             />
             <button
