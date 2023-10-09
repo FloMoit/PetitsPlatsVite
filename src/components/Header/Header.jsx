@@ -4,8 +4,6 @@ function Header(props) {
   const { onSearch } = props;
 
   function changeHandler(event) {
-    console.log(event.target.value);
-
     if (event.target.value.length < 3) {
       onSearch("");
     } else {

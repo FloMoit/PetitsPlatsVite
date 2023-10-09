@@ -31,15 +31,9 @@ function filterRecipes(recipes, search, tags) {
     }
 
     if (tags.ingredients.length > 0 && isOk) {
-      console.log("ingredients");
       isOk = false;
       for (let k = 0; k < tags.ingredients.length; k++) {
         for (let j = 0; j < recipes[i].ingredients.length; j++) {
-          console.log(
-            recipes[i].ingredients[j].ingredient.toLowerCase() +
-              " / " +
-              tags.ingredients[k].toLowerCase()
-          );
           if (
             recipes[i].ingredients[j].ingredient
               .toLowerCase()
@@ -53,7 +47,6 @@ function filterRecipes(recipes, search, tags) {
     }
 
     if (tags.appliances.length > 0 && isOk) {
-      console.log("appliances");
       isOk = false;
       for (let k = 0; k < tags.appliances.length; k++) {
         if (
@@ -68,7 +61,6 @@ function filterRecipes(recipes, search, tags) {
     }
 
     if (tags.ustensils.length > 0 && isOk) {
-      console.log("ustensils");
       isOk = false;
       for (let k = 0; k < tags.ustensils.length; k++) {
         for (let j = 0; j < recipes[i].ustensils.length; j++) {
