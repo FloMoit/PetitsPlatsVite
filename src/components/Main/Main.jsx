@@ -5,60 +5,91 @@ import Recipe from "../Recipe/Recipe.jsx";
 
 function filterRecipes(recipes, search, tags) {
   search = search.toLowerCase();
+  let filteredArray = [];
 
-  return recipes.filter((recipe) => {
+  for (let i = 0; i < recipes.length; i++) {
     let isOk = false;
+
     if (search !== "") {
-      if (recipe.name.toLowerCase().includes(search)) {
+      if (recipes[i].name.toLowerCase().indexOf(search) > -1) {
         isOk = true;
-      } else if (recipe.description.toLowerCase().includes(search)) {
-        isOk = true;
-      } else if (
-        recipe.ingredients.some((ingredient) =>
-          ingredient.ingredient.toLowerCase().includes(search)
-        )
-      ) {
+      } else if (recipes[i].description.toLowerCase().indexOf(search) > -1) {
         isOk = true;
       } else {
-        isOk = false;
+        for (let j = 0; j < recipes[i].ingredients.length; j++) {
+          if (
+            recipes[i].ingredients[j].ingredient.toLowerCase().indexOf(search) >
+            -1
+          ) {
+            isOk = true;
+            break;
+          }
+        }
       }
     } else {
       isOk = true;
     }
 
     if (tags.ingredients.length > 0 && isOk) {
-      if (
-        recipe.ingredients.some((ingredient) =>
-          tags.ingredients.includes(ingredient.ingredient)
-        )
-      ) {
-        console.log("ingredient", recipe.ingredients);
-        isOk = true;
-      } else {
-        isOk = false;
+      console.log("ingredients");
+      isOk = false;
+      for (let k = 0; k < tags.ingredients.length; k++) {
+        for (let j = 0; j < recipes[i].ingredients.length; j++) {
+          console.log(
+            recipes[i].ingredients[j].ingredient.toLowerCase() +
+              " / " +
+              tags.ingredients[k].toLowerCase()
+          );
+          if (
+            recipes[i].ingredients[j].ingredient
+              .toLowerCase()
+              .indexOf(tags.ingredients[k].toLowerCase()) > -1
+          ) {
+            isOk = true;
+            break;
+          }
+        }
       }
     }
 
     if (tags.appliances.length > 0 && isOk) {
-      if (tags.appliances.includes(recipe.appliance)) {
-        isOk = true;
-      } else {
-        isOk = false;
+      console.log("appliances");
+      isOk = false;
+      for (let k = 0; k < tags.appliances.length; k++) {
+        if (
+          recipes[i].appliance
+            .toLowerCase()
+            .indexOf(tags.appliances[k].toLowerCase()) > -1
+        ) {
+          isOk = true;
+          break;
+        }
       }
     }
 
     if (tags.ustensils.length > 0 && isOk) {
-      if (
-        recipe.ustensils.some((ustensil) => tags.ustensils.includes(ustensil))
-      ) {
-        isOk = true;
-      } else {
-        isOk = false;
+      console.log("ustensils");
+      isOk = false;
+      for (let k = 0; k < tags.ustensils.length; k++) {
+        for (let j = 0; j < recipes[i].ustensils.length; j++) {
+          if (
+            recipes[i].ustensils[j]
+              .toLowerCase()
+              .indexOf(tags.ustensils[k].toLowerCase()) > -1
+          ) {
+            isOk = true;
+            break;
+          }
+        }
       }
     }
 
-    return isOk;
-  });
+    if (isOk) {
+      filteredArray.push(recipes[i]);
+    }
+  }
+
+  return filteredArray;
 }
 
 function Main(props) {
