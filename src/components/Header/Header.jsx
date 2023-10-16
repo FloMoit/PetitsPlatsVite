@@ -1,11 +1,23 @@
+import React from "react";
 import logo from "../../assets/interface/logo.png";
+import debounce from "lodash/debounce";
+
+// const changeHandler = React.useMemo(
+//   () =>
+//     debounce((event) => {
+//       if (event.target.value.length < 3) {
+//         onSearch("");
+//       } else {
+//         onSearch(event.target.value);
+//       }
+//     }, 200),
+//   []
+// );
 
 function Header(props) {
   const { onSearch } = props;
 
   function changeHandler(event) {
-    console.log(event.target.value);
-
     if (event.target.value.length < 3) {
       onSearch("");
     } else {

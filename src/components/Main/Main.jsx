@@ -4,7 +4,7 @@ import Select from "../Select/Select.jsx";
 import Recipe from "../Recipe/Recipe.jsx";
 
 function filterRecipes(recipes, search, tags) {
-  search = search.toLowerCase();
+  search = search.toLowerCase().trim();
 
   return recipes.filter((recipe) => {
     let isOk = false;
@@ -32,7 +32,6 @@ function filterRecipes(recipes, search, tags) {
           tags.ingredients.includes(ingredient.ingredient)
         )
       ) {
-        console.log("ingredient", recipe.ingredients);
         isOk = true;
       } else {
         isOk = false;
