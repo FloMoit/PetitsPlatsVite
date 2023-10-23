@@ -4,7 +4,7 @@ function recipeCard({ recipe }) {
       data-id=${recipe.id}
       class="recipe-card    flex flex-col min-w-0 overflow-hidden bg-white shadow rounded-2xl"
     >
-      <div className="relative w-full h-72">
+      <div class="relative w-full h-72">
         <img
           src="${'src/assets/recipes-img/' + recipe.image}"
           alt="Recipe"

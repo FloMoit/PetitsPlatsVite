@@ -30,7 +30,7 @@ function selectTags(props) {
     }
   }
   function updateOptions(search) {
-    document.querySelectorAll('#select-' + name + '-option').forEach((option) => {
+    document.querySelectorAll('#select-' + name + '-options .option').forEach((option) => {
       if (option.getAttribute('data-value').toLowerCase().indexOf(search.toLowerCase()) !== -1) {
         option.style.display = 'block';
       } else {
@@ -119,10 +119,6 @@ function selectTags(props) {
       const search = event.target.value;
 
       updateOptions(search);
-
-      document
-        .querySelector('#select-' + name + '-form input')
-        .removeEventListener('input', handleInput);
     }
 
     document
